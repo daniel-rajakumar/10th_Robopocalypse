@@ -1,0 +1,141 @@
+package com.danielr.robopocalypse.game;
+import com.danielr.robopocalypse.game.gfx.*;
+
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
+import javax.swing.JFrame;//creats a new windows.
+
+public class robopocalypseApp extends Canvas implements Runnable{// runnable is a Thread & canvas is used to draw
+                                                                  // inside the window
+
+    private static final long serialVersionUID = 1L;
+
+    public static final int WIDTH = 160; // width of the window
+    public static final int HEIGHT = WIDTH / 12 * 9;// height of the window
+    public static final int SCALE = 3;// length of the windows (cm or m or inch or pix etc...)
+    public static final String NAME = "Game";// app name in the title bar
+
+    public JFrame frame;// setting up the window's frame
+
+    public boolean running = false;// declaring a variable called running and setting it to false
+
+    public int tickCount = 0;// declaring a variable called tickCount
+
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);// creating a image
+    private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();// setting up the pixels
+
+    private SpriteSheet SpriteSheet = new SpriteSheet("/img/Sprite_Sheet.png");//delcaring a new sting called "spriteSheete" with image's path
+
+    public robopocalypseApp() {
+
+        setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));// minimum size you can resize(minimize) your
+                                                                     // window
+        setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));// maximum size you can resize(maximize) your
+                                                                     // window
+        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));// preferred size.
+
+        frame = new JFrame(NAME); // from now "frame" is "JFrame(NAME)"
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// just deleted every data as soon you closed the window
+        frame.setLayout(new BorderLayout());// setting up what kind of layout you want
+
+        frame.add(this, BorderLayout.CENTER);// the canvas will be center inside the window.
+        frame.pack();// it keeps all the contants inside your windows(part of JFrame)
+
+        frame.setResizable(false);// resize button(on window)
+        frame.setLocationRelativeTo(null);// starting location = false
+        frame.setVisible(true);// poping the window up
+    }
+
+    public synchronized void start() {
+        running = true;
+        new Thread(this).start();// this tells to run the app AND output datas in terminal(both at same time)
+    }
+
+    public synchronized void stop() {
+        running = false;
+    }
+
+    public void run() {
+        long lastTime = System.nanoTime();// long is like int... taking nanotime
+        double nanoSecondPerTick = 1000000000D / 60D;// dividinig the tick by 60---(min to sec)
+
+        int ticks = 0;// ticks = time
+        int frames = 0;// declaring a int variable called frames
+
+        long lastTimer = System.currentTimeMillis();// take current million
+        double delta = 0;// declaring a double variable called delta
+
+        while (running) {// while the code(game) is running
+            long now = System.nanoTime();// declaring a variable called now, which get the live time in nanoSecond
+            delta += (now - lastTime) / nanoSecondPerTick;// add delta by currentNanoTime(now) minus(-)
+                                                          // lastNanoTIme(lastTime) then divide by perTick
+            lastTime = now;// from now, lastTime is "now"; they both have same value
+
+            boolean shouldRender = true;// declaring a boonlean variable called shouldRender, which mean start/stop
+                                        // rendering
+            while (delta >= 1) {// while the delta is greater than or equale to 1 then....
+                ticks++;// add tick by 1
+                tick();
+                delta--;// reduce delta by 1
+                shouldRender = true;// shouldRender is running
+            }
+
+            try {// if...
+                Thread.sleep(2);// ...this statement is an error...
+            } catch (InterruptedException e) {// ...then...
+                e.printStackTrace();/// ...output this statement.
+            }
+
+            if (shouldRender) {// if shouldRender is true, then...
+                frames++;// add frames by 1
+                render();
+            }
+
+            if ((System.currentTimeMillis() - lastTimer) >= 1000) {// if liveTime minus lastTime is greater than or
+                                                                   // equale to 1000(1000milisecond = 1 sec) then...
+                lastTimer += 1000;// ... add 1000
+                System.out.println("[Frames: " + frames + "] , [Ticks: " + ticks + "]");
+                frames = 0;// then set frames to equal 0
+                ticks = 0;// set frames to quale 0
+            }
+        }
+    }
+
+    public void tick() {// tick aka updats
+        tickCount++;// add tickCount by 1
+
+        for (int i = 0; i < pixels.length; i++) {// forloop for image animation
+            pixels[i] = i + tickCount;// ANIMATION STYLE...
+        }
+    }
+
+    public void render() {// render aka shows the results of the tick(updats) as ouput.
+        BufferStrategy bs = getBufferStrategy();// from now bs is aka BufferStrategy
+        if (bs == null) {// is bufferStrategy's value is none then...
+            createBufferStrategy(3);// helps canvas to run without buffering... the higher your value is, the lower
+                                    // it buffer; the higher your value is, the more your memory uses.
+            return;// returns the value, in this case it is 3
+        }
+
+        Graphics g = bs.getDrawGraphics();// from now g aka BufferStrategy.DrawGraphics
+
+        g.setColor(Color.BLACK);// background color:black
+        g.fillRect(0, 0, getWidth(), getHeight());// the g.setcolor's size
+
+        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);// draw the image
+
+        g.dispose();// it will clean up and destory the window after it closed...
+        bs.show();// show the animations
+    }
+    public static void main(String[] args) {
+        new robopocalypseApp().start();// create the window and (open/start) it
+    }
+
+}

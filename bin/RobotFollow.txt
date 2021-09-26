@@ -1,0 +1,115 @@
+why i am saving this code? i littartly spend more than 6 hrs debugging this crazy nested if-statements ;-;
+
+i dont wanna lose it!
+
+//  if(Player.yloac + radius >= (int)y){
+            if (Player.yloac + radius != (int)y && Player.yloac - radius != (int)y) {
+               ya++;
+            }
+        } else if (Player.yloac <= (int)y) { //if the robo x is >> than mine then robo move <<
+                ya--;
+        } 
+    
+        if (Player.yloac > (int)y) {
+            if (Player.yloac - radius != (int)y && Player.yloac + radius != (int)y) {
+                ya-=2;
+            } if (Player.yloac > y && Player.yloac - radius > y) {
+                ya+=2;
+            }
+        }
+
+        
+        if(Player.xloac + radius >= (int)x){
+            if (Player.xloac + radius != (int)x && Player.xloac - radius != (int)x) {
+               xa++;
+            }
+        } else if (Player.xloac <= (int)x) { //if the robo x is >> than mine then robo move <<
+                xa--;
+        } 
+    
+        if (Player.xloac > (int)x) {
+            if (Player.xloac - radius != (int)x && Player.xloac + radius != (int)x) {
+                xa-=2;
+            } if (Player.xloac > x && Player.xloac - radius > x) {
+                xa+=2;
+            }
+        }
+
+
+///////////////////////////////////////////////////////////
+well.. i remade that loop and thid seems make more sense to me...
+
+        radius = 40;
+        test = 8;
+        
+        
+        if (Player.yloac+test >= (int)y) {
+            if (((Player.yloac+test)-radius) >= (int)y) {
+                ya++;
+            } else if(((Player.yloac+test)-(int)y) <= (radius-2)){
+                ya--;
+            }    
+        } 
+        
+        if ((Player.yloac+test <= (int)y)) {
+            if (((int)y - Player.yloac) <= (radius + test)) {
+                ya++; 
+            } else if (((int)y - Player.yloac) >= ((radius+2) + test)){
+                ya--;
+            }
+            System.out.println((int)y - Player.yloac);
+        }
+        
+
+        test = 4;
+        
+       
+        if (Player.xloac+test >= (int)x) {//right to left (push)
+            if (((Player.xloac+test)-radius) >= (int)x) {
+                xa++;
+            } else if(((Player.xloac+test)-(int)x) <= (radius-2)){
+                xa--;
+            }    
+        } 
+        
+
+        if ((Player.xloac+test <= (int)x)) {
+            if (((int)x - Player.xloac) <= ((radius-2) + test)) {
+                xa++; 
+            } else if (((int)x - Player.xloac) >= (radius + test)){
+                xa--;
+            }
+            System.out.println((int)x - Player.xloac);
+        }
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////
+
+
+
+
+        int num1, num2, num3;
+        int num1_1, num1_2, num1_3, num2_1, num2_2, num2_3, num3_1, num3_2, num3_3;
+        num1_1 = (int)(Math.random()*5 - 4) + 4;
+        num1_2 = (int)(Math.random()*5 - 4) + 4;
+        num1_3 = (int)(Math.random()*5 - 4) + 4;
+        num2_1 = (int)(Math.random()*5 - 4) + 4;
+        num2_2 = (int)(Math.random()*5 - 4) + 4;
+        num2_3 = (int)(Math.random()*5 - 4) + 4;
+        num3_1 = (int)(Math.random()*5 - 4) + 4;
+        num3_2 = (int)(Math.random()*5 - 4) + 4;
+        num3_3 = (int)(Math.random()*5 - 4) + 4;
+        
+        num1 = Integer.parseInt(num1_1 + "" +  num1_2 + "" +  num1_3);
+        num2 = Integer.parseInt(num2_1 + "" +  num2_2 + "" +  num2_3);
+        num3 = Integer.parseInt(num3_1 + "" +  num3_2 + "" +  num3_3);
+
+        this.colors = color.get(-1,  num1, num2, num3);  

@@ -1,0 +1,71 @@
+
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+//import java.awt.Color;
+import java.awt.Dimension;
+//import java.awt.Graphics;
+//import java.awt.image.BufferStrategy;
+//import java.awt.image.BufferedImage;
+//import java.awt.image.DataBufferInt;
+import javax.swing.JFrame;//creats a new windows.
+ 
+public class robopocalypseApp extends Canvas implements Runnable {// runnable is a Thread & canvas is used to draw in the app
+ 
+    private static final long serialVersionUID = 1L;
+ 
+    public static final int WIDTH = 160; // width of the window
+    public static final int HEIGHT = WIDTH / 12 * 9;// height of the window
+    public static final int SCALE = 3;// length of the windows (cm or m or inch or pix etc...)
+    public static final String NAME = "RoboSurvival-robopocalypse";// app name in the title bar
+ 
+    public JFrame frame;// setting up the window's frame
+ 
+    public boolean running = false;// declaring a variable called running and setting it to false
+ 
+    public robopocalypseApp() {
+ 
+        setMinimumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));// minimum size you can resize(minimize) your
+                                                                     // window
+        setMaximumSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));// maximum size you can resize(maximize) your
+                                                                     // window
+        setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));// preferred size.
+ 
+        frame = new JFrame(NAME); // from now "frame" is "JFrame(NAME)"
+ 
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// just deleted every data as soon you closed the window
+        frame.setLayout(new BorderLayout());// setting up what kind of layout you want
+ 
+        frame.add(this, BorderLayout.CENTER);// the frame pops up in center
+        frame.pack();// it keeps all the contants inside your windows(part of JFrame)
+ 
+        frame.setResizable(true);// resize button(on window)
+        frame.setLocationRelativeTo(null);// starting location = false
+        frame.setVisible(true);// poping the window up
+    }
+ 
+    public synchronized void start() {
+        running = true;
+        new Thread(this).start();// this tells to run the app AND output datas in terminal(both at same time)
+    }
+ 
+    public synchronized void stop() {
+        running = false;
+    }
+ 
+    public void run() {
+ 
+        int i = 0;
+        while (running) {
+            System.out.println("[" + i++ + "] Hello World");
+        }
+    }
+ 
+    public static void main(String[] args) {
+        new robopocalypseApp().start();// creat the window and open/start it
+    }
+}
+ 
+ 
+ 
+ 
+
