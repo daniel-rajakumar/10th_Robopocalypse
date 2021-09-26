@@ -1,0 +1,60 @@
+{
+                        "configurations": [
+                            {
+                                "type": "java",
+                                "name": "Launch robopocalypseApp",
+                                "request": "launch",
+                                "mainClass": "com.daniel.robopocalypse.game.robopocalypseApp",
+                                "projectName": "10th_Robopocalyps_fa019217"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - SplashDemo",
+                                "request": "launch",
+                                "mainClass": "SplashDemo",
+                                "projectName": "robopocalypse"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - Person",
+                                "request": "launch",
+                                "mainClass": "Person",
+                                "projectName": "robopocalypse"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - Main",
+                                "request": "launch",
+                                "mainClass": "Main",
+                                "projectName": "robopocalypse"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - random",
+                                "request": "launch",
+                                "mainClass": "random",
+                                "projectName": "robopocalypse"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - keywords",
+                                "request": "launch",
+                                "mainClass": "keywords",
+                                "projectName": "robopocalypse"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - offsetTest",
+                                "request": "launch",
+                                "mainClass": "offsetTest",
+                                "projectName": "robopocalypse"
+                            },
+                            {
+                                "type": "java",
+                                "name": "CodeLens (Launch) - robopocalypseApp",
+                                "request": "launch",
+                                "mainClass": "com.danielr.robopocalypse.game.robopocalypseApp",
+                                "projectName": "robopocalypse"
+                            }
+                        ]
+}
